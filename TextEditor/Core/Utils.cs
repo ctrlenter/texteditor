@@ -19,6 +19,8 @@ namespace TextEditor.Core
     public static class Utils
     {
 
+        public static string UserDesktopRegex = @"(\\Users\\A-Za-z]+\\)";
+
         public static bool IsValidRegex(string pattern)
         {
             if (string.IsNullOrEmpty(pattern)) return false;

@@ -174,14 +174,14 @@ namespace TextEditor
                 this.Size = size;
             }
 
-            if(Config["start_pos"] != null)
+            if (Config["start_pos"] != null)
             {
                 var val = Config["start_pos"];
-                if(val == ViewSettings.POS_CENTER)
+                if (val == ViewSettings.POS_CENTER)
                 {
                     StartPosition = FormStartPosition.CenterScreen;
                 }
-                else if(val == ViewSettings.POS_LAST)
+                else if (val == ViewSettings.POS_LAST)
                 {
                     StartPosition = FormStartPosition.Manual;
                     var newLoc = new Point();
@@ -194,7 +194,7 @@ namespace TextEditor
                             newLoc.X = res;
                         else
                             newLoc.X = 800;
-                            //xFailed = true;
+                        //xFailed = true;
                     }
 
                     if (Config.HasElement("Y"))
@@ -204,10 +204,10 @@ namespace TextEditor
                             newLoc.Y = res;
                         else
                             newLoc.Y = 600;
-                            //yFailed = true;
+                        //yFailed = true;
                     }
 
-                    if(xFailed || yFailed)
+                    if (xFailed || yFailed)
                     {
                         //TODO: Check which one failed and handle it.
                         //this means that either X or Y failed.
@@ -237,7 +237,34 @@ namespace TextEditor
             console.log(machines.Count());
             foreach (var mach in machines)
             {
-                rcbPresets.DropDownItems.Add(new RibbonButton(mach.MachineName));
+                if (Directory.Exists(mach.FolderPath))
+                {
+                    rcbPresets.DropDownItems.Add(new RibbonButton(mach.MachineName));
+                }
+                else
+                {
+                    //I assume it doesn't exist. Lets ask if they want to create a new folder at that path
+                    var res = MessageBox.Show($"Folder \"{mach.FolderPath}\" doesn't exist.\nDo you want to create the folder?","Error",MessageBoxButtons.YesNo);
+                    if(res == DialogResult.Yes)
+                    {
+                        //var result = Regex.Match(mach.FolderPath, Utils.UserDesktopRegex);
+                        //MessageBox.Show(result.ToString());
+                        //MessageBox.Show($"Path: {mach.FolderPath}, result: {result.Success}");
+                        try
+                        {   
+                            Directory.CreateDirectory(mach.FolderPath);
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show($"{ex.Message}  ---  {ex.StackTrace}  ---  {ex.Source}");
+                        }
+                    }
+                    else if(res == DialogResult.No)
+                    {
+                        //user doesn't care about the folder.
+                        //TODO: ADd this at some point
+                    }
+                }
             }
 
 

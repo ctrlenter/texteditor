@@ -19,6 +19,7 @@ namespace TextEditor.Core
         CopyToSettingView view;
         public AddCopyPreset(CopyToSettingView settingsView)
         {
+            Console.WriteLine("Hello!");
             view = settingsView;
             InitializeComponent();
             Load += AddMachineForm_Load;
