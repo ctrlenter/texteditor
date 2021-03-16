@@ -101,6 +101,7 @@ namespace TextEditor.Core
             }
         }
 
+
         public void ReloadMachines()
         {
             cbMachines.Items.Clear();

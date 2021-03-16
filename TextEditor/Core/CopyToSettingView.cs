@@ -47,17 +47,27 @@ namespace TextEditor.Core
 
         }
 
+        public void RefreshPresetList()
+        {
+            //Beep boop boop
+            SettingsForm.mainForm.rcbPresets.DropDownItems.Clear();
+            for(var i = 0; i < machines.Count; i++)
+            {
+                SettingsForm.mainForm.rcbPresets.DropDownItems.Add(new RibbonButton(machines[i].MachineName));
+            }
+        }
+
         private DataTable ConvertListToDataTable(List<Machine> machines)
         {
             DataTable table = new DataTable();
 
-            var machineName = table.Columns.Add("Machine Name");
+            var machineName = table.Columns.Add("Preset Name");
             var path = table.Columns.Add("Path");
 
             for (int i = 0; i < machines.Count; i++)
             {
                 var row = table.NewRow();
-                row["Machine Name"] = machines[i].MachineName;
+                row["Preset Name"] = machines[i].MachineName;
                 row["Path"] = machines[i].FolderPath;
                 table.Rows.Add(row);
             }
@@ -97,7 +107,7 @@ namespace TextEditor.Core
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            new AddMachineForm(this).ShowDialog();
+            new AddCopyPreset(this).ShowDialog();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -110,6 +120,7 @@ namespace TextEditor.Core
                 machines.RemoveAt(item.RowIndex);
                 this.dataGridView1.Rows.RemoveAt(item.RowIndex);
                 SaveMachines();
+                RefreshPresetList();
             }
         }
 

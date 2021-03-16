@@ -1,6 +1,6 @@
 ﻿namespace TextEditor.Core
 {
-    partial class AddMachineForm
+    partial class AddCopyPreset
     {
         /// <summary>
         /// Required designer variable.

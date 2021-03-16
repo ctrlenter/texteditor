@@ -11,50 +11,52 @@ using System.Windows.Forms;
 
 namespace TextEditor.Core
 {
-    public partial class AddMachineForm : Form
+    public partial class AddCopyPreset : Form
     {
         string path; //The path to the folder you want to copy to
         string machineName; //User sees this
         int index; //used for identifying
         CopyToSettingView view;
-        public AddMachineForm ( CopyToSettingView settingsView )
+        public AddCopyPreset(CopyToSettingView settingsView)
         {
             view = settingsView;
-            InitializeComponent( );
+            InitializeComponent();
             Load += AddMachineForm_Load;
             this.TopMost = view.SettingsForm.TopMost;
-            this.BringToFront( );
+            this.BringToFront();
         }
 
-        private void AddMachineForm_Load ( object sender, EventArgs e )
+        private void AddMachineForm_Load(object sender, EventArgs e)
         {
             this.TopMost = view.SettingsForm.mainForm.TopMost;
         }
 
-        public new void ShowDialog ( )
+        public new void ShowDialog()
         {
 
             this.TopMost = view.SettingsForm.mainForm.TopMost;
-            this.Show( );
+            this.Show();
         }
 
-        private void btnPickFolder_Click ( object sender, EventArgs e )
+        private void btnPickFolder_Click(object sender, EventArgs e)
         {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog( );
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.InitialDirectory = "C:\\";
             dialog.IsFolderPicker = true;
-            if ( dialog.ShowDialog( ) == CommonFileDialogResult.Ok )
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                BringToFront( );
+                BringToFront();
                 path = dialog.FileName;
                 lblActualPath.Text = path;
             }
         }
 
-        private void btnSave_Click ( object sender, EventArgs e )
+
+
+        private void btnSave_Click(object sender, EventArgs e)
         {
             machineName = txMachineName.Text;
-            if ( view.machines.Count == 0 )
+            if (view.machines.Count == 0)
                 index = 0;
             else index = view.machines.Count;
 
@@ -62,29 +64,30 @@ namespace TextEditor.Core
             txMachineName.Text = "";
             lblActualPath.Text = "";
 
-            var machine = new Machine( );
+            var machine = new Machine();
             machine.ID = index;
             machine.MachineName = machineName;
             machine.FolderPath = path;
 
-            if(view.AddItem(machine))
+            if (view.AddItem(machine))
             {
-                this.Hide( );
-                view.SaveMachines( );
+                this.Hide();
+                view.SaveMachines();
+                view.RefreshPresetList();
             }
             else
             {
-                MessageBox.Show ( $"Could not add machine \"{machineName}\"" );
+                MessageBox.Show($"Could not add machine \"{machineName}\"");
             }
 
         }
 
-        private void AddMachineForm_FormClosing ( object sender, FormClosingEventArgs e )
+        private void AddMachineForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ( e.CloseReason == CloseReason.UserClosing )
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
-                this.Hide( );
+                this.Hide();
             }
         }
     }
