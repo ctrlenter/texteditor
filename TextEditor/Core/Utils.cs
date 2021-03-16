@@ -254,10 +254,11 @@ namespace TextEditor.Core
 
             if (set.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet))
             {
-                using (var writer = new StreamWriter(new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write)))
+                File.WriteAllText(path, content);
+                /*using (var writer = new StreamWriter(new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write)))
                 {
                     writer.WriteLine(content);
-                }
+                }*/
             }
         }
 
