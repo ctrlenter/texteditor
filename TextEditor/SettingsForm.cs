@@ -258,7 +258,7 @@ namespace TextEditor
                                 || CNCView.cbMachines.Text == "Heidenhain"
                                 || CNCView.cbMachines.Text == "Siemens")
                         {
-                            MessageBox.Show("You cannot edit this machine.\nReason: It is a default machine.");
+                            MessageBox.Show("You cannot edit this machine.\nReason: It's a default machine.");
                             return;
                         }
                         else

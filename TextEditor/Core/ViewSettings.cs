@@ -32,6 +32,18 @@ namespace TextEditor.Core
         {
             cbStartLocs.Items.Add(POS_CENTER);
             cbStartLocs.Items.Add(POS_LAST);
+            switch (Form1.Config["start_pos"])
+            {
+                case POS_CENTER:
+                    cbStartLocs.Text = POS_CENTER;
+                    break;
+                case POS_LAST:
+                    cbStartLocs.Text = POS_LAST;
+                    break;
+                default:
+                    cbStartLocs.Text = POS_CENTER;
+                    break;
+            }
         }
 
         private void txWidth_TextChanged(object sender, EventArgs e)

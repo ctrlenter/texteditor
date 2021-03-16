@@ -185,7 +185,36 @@ namespace TextEditor
                 {
                     StartPosition = FormStartPosition.Manual;
                     var newLoc = new Point();
-                    if (Config.HasElements("X", "Y"))
+
+                    bool xFailed = false, yFailed = false;
+                    if (Config.HasElement("X"))
+                    {
+                        var x = Config["X"];
+                        if (int.TryParse(x, out int res))
+                            newLoc.X = res;
+                        else
+                            newLoc.X = 800;
+                            //xFailed = true;
+                    }
+
+                    if (Config.HasElement("Y"))
+                    {
+                        var y = Config["Y"];
+                        if (int.TryParse(y, out int res))
+                            newLoc.Y = res;
+                        else
+                            newLoc.Y = 600;
+                            //yFailed = true;
+                    }
+
+                    if(xFailed || yFailed)
+                    {
+                        //TODO: Check which one failed and handle it.
+                        //this means that either X or Y failed.
+                    }
+
+                    this.Location = newLoc;
+                    /*if (Config.HasElements("X", "Y"))
                     {
                         var X = Config["X"];
                         var Y = Config["Y"];
@@ -200,7 +229,7 @@ namespace TextEditor
                         else
                             newLoc.Y = 600;
 
-                    }
+                    }*/
                 }
             }
 

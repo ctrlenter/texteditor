@@ -99,6 +99,7 @@ namespace TextEditor.Core.XML
 
         private void BaseSave()
         {
+            //TODO: Find out why it outputs non xml at the end of the config
             var xDoc = new XDocument();
 
             var mainElem = new XElement("Config");
@@ -128,10 +129,15 @@ namespace TextEditor.Core.XML
             bool res = false;
             for(var i = 0; i < args.Length; i++)
             {
-                if (Elements.ContainsKey(args[i])) res = true;
+                if (Elements.ContainsKey(args[i].ToLower())) res = true;
                 else return false;
             }
             return res;
+        }
+
+        public bool HasElement(string elem)
+        {
+            return Elements.ContainsKey(elem.ToLower());
         }
 
     }
